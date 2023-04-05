@@ -2,9 +2,9 @@
 
 ## Iterators
 
-Iterators are an object which allows us to step through each element in a collection
+Iterators are objects which provide methods for us to step through each element in a collection.
 
-We have to imagine having a cursor and then stepping through a list
+It is synonymous to having a cursor and then stepping through a list.
 
 ```python
 ls = [1, 2, 3, 4, 5]
@@ -13,23 +13,75 @@ ls_iter = iter(ls)
 # [| 1, 2, 3, 4, 5]  # the | symbol indicates the position of the cursor
 ```
 
-When we ask for the next element, the cursor will return the item next to the iterator, in this case the value 1
+When we ask for the next element, the cursor will return the item next to the iterator, in this case the value 1:
 
 ```python
+print(next(ls_iter))  # 1
 # [1, | 2, 3, 4, 5]
 ```
 
-After iterating, the cursor will be at the next element in the list
+We can call `next` again, and the cursor will be at the next element in the list.
 
 ```python
+print(next(ls_iter))  # 2
+# [1, 2, | 3, 4, 5]
+```
+
+We can continue iterating until we have reached the last element in the list, which can be visualised as follows:
+
+```python
+print(next(ls_iter))
 # [1, 2, 3, 4, 5 |]
 ```
 
-After returning the last element in the list, the cursor will be at the back of the list, and no items are to the right of it
+Once we are at the last element in the list, calling `next` again will throw an error since the iterable does not contain anymore elements.
 
-Attempting to iterate on this iterable will indicate that there are no items left
+```python
+# [1, 2, 3, 4, 5 |]
+print(next(ls_iter))
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# StopIteration
+```
 
-If we want to iterate from the front again, we can 
+A full iteration cycle of the `iter` object is as follows:
+
+```python
+ls = [1, 2, 3, 4, 5]
+ls_iter = iter(ls)
+next(ls_iter)  # 1
+next(ls_iter)  # 2
+next(ls_iter)  # 3
+next(ls_iter)  # 4
+next(ls_iter)  # 5
+next(ls_iter)  # Error as follows:
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# StopIteration
+```
+
+### Differences with a `list`
+
+Iterables can only be consumed once
+
+```python
+ls = [1, 2, 3, 4, 5]
+print(list(ls))  # [1, 2, 3, 4, 5]
+print(list(ls))  # [1, 2, 3, 4, 5]
+
+ls_iter = iter([1, 2, 3, 4, 5])
+print(list(ls_iter))  # [1, 2, 3, 4, 5]
+print(list(ls_iter))  # []
+```
+
+If we need to use the contents more than once, we should save the contents to a list first.
+
+```python
+ls_iter = iter([1, 2, 3, 4, 5])
+ls = list(ls_iter)
+print(list(ls))  # [1, 2, 3, 4, 5]
+print(list(ls))  # [1, 2, 3, 4, 5]
+```
 
 ## Filter
 
