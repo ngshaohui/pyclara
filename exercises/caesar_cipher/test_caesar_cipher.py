@@ -1,5 +1,5 @@
 import unittest
-from caesar_cipher_sol import encrypt_text
+from caesar_cipher import encrypt_text
 
 
 class TestStringMethods(unittest.TestCase):

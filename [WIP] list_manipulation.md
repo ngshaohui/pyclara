@@ -2,7 +2,23 @@
 
 ## Iterators
 
-Iterators are objects which provide methods for us to step through each element in a collection.
+Iterators are objects which provide methods for us to step through each element in an iterable.
+
+### Examples of iterables
+
+All collections are iterables.
+
+- list
+- tuple
+- dict
+
+There are also functions that can create iterables for us to consume.
+
+- range
+
+### Consuming an iterable
+
+In order to work with the contents of an iterable, we will need to consume it by stepping through it.
 
 It is synonymous to having a cursor and then stepping through a list.
 
@@ -60,6 +76,17 @@ next(ls_iter)  # Error as follows:
 # StopIteration
 ```
 
+We can also opt to use `for .. in` to iterate through an `iter` object.
+
+```python
+ls_iter = iter([1, 2, 3])
+for num in ls_iter:
+  print(num)
+# 1
+# 2
+# 3
+```
+
 ### Differences with a `list`
 
 Iterables can only be consumed once
@@ -83,9 +110,24 @@ print(list(ls))  # [1, 2, 3, 4, 5]
 print(list(ls))  # [1, 2, 3, 4, 5]
 ```
 
+### Working with iterators
+
+Iterators exist since they offer a clear predefined method to keep track of the current position in a collection.
+
+They provide time and space efficiency in our code, since an operation can be deferred indefinitely until the element is requested (lazy evaluation). This also allows us to deal with other input sources of data such as streams, which could contain infinite elements.
+
+As such, functions which commonly deal with list transformation by taking in a collection and outputting a collection would often choose to return an iterator.
+
+However, the potential benefits for the aforementioned use case is commonly not experienced unless working with huge data sets.
+
+It is acceptable to simply convert iterators to lists and work with them instead if that is more intuitive at this juncture while learning.
+
 ## Filter
 
-As the name implies, we want to filter out elements in a list
+The filter function takes in 2 arguments:
+
+1. function that takes in an element and returns a `bool`
+2. iterable
 
 Only the elements that fulfil a predicate are kept
 
@@ -100,7 +142,14 @@ print(list(filtered_ls))  # [2, 4]
 
 ## Map
 
-We want to apply an operation over the entire list
+The map function takes in 2 arguments:
+
+1. function that takes in an element and returns another element
+2. iterable
+
+The map function takes a function, and applies it to every element within the iterable.
+
+A common way to use this function is for data processing, where we want to transform a list
 
 ```python
 def multiply_five(num: int) -> int:
@@ -108,4 +157,34 @@ def multiply_five(num: int) -> int:
 
 ls = [1, 2, 3, 4, 5]
 mapped_ls = map(multiply_five, ls)
-print(list(mapped_ls))
+print(list(mapped_ls))  # [5, 10, 15, 20, 25]
+```
+
+We can also map from one type to another:
+
+```python
+words = ["one", "two", "three"]
+mapped_ls = map(len, words)
+print(list(mapped_ls))  # [3, 3, 5]
+```
+
+```python
+def to_upper(st: str) -> str:
+  return st.upper()
+
+# capitalise all words
+words = ["foo", "BAR", "fooBAR"]
+mapped_ls = map(to_upper, words)
+print(list(mapped_ls))  # ['FOO', 'BAR', 'FOOBAR']
+```
+
+Remember that functions implicitly return `None` so if a function does not have a return statement, it simply sets everything to `None`.
+
+```python
+def do_nothing(arg):
+  pass
+
+ls = [1, 2, 3, 4, 5]
+mapped_ls = map(do_nothing, ls)
+print(list(mapped_ls))  # [None, None, None, None, None]
+```

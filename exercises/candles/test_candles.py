@@ -1,5 +1,5 @@
 import unittest
-from candles_sol import count_candles
+from candles import count_candles
 
 
 class TestStringMethods(unittest.TestCase):
