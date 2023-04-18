@@ -2,7 +2,7 @@
 
 ## Iterators
 
-Iterators are objects which provide methods for us to step through each element in an iterable.
+Iterators are objects which provide methods for us to step through each element in a collection.
 
 ### Examples of iterables
 
@@ -129,7 +129,7 @@ The filter function takes in 2 arguments:
 1. function that takes in an element and returns a `bool`
 2. iterable
 
-Only the elements that fulfil a predicate are kept
+Only the elements that fulfil a predicate are kept in the final collection
 
 ```python
 def is_even(num: int) -> bool:
@@ -138,6 +138,64 @@ def is_even(num: int) -> bool:
 ls = [1, 2, 3, 4, 5]
 filtered_ls = filter(is_even, ls)  # we expect to be left with [2, 4]
 print(list(filtered_ls))  # [2, 4]
+```
+
+Without a filter function, it can be written as:
+
+```python
+def is_even(num: int) -> bool:
+  return num % 2 == 0
+
+ls = [1, 2, 3, 4, 5]
+filtered_ls = []
+# get list of even numbers from ls
+for num in ls:
+  if is_even(num):
+    filtered_ls.append(num)
+print(list(filtered_ls))  # [2, 4]
+```
+
+The main benefit of using a filter function is to evoke clarity in the expression.
+
+Do note that there is no real performance gain between the two methods, so neither is superior or more "correct".
+
+### Filter function does not return boolean
+
+If the function passed to `filter` does not return a `bool`, the truthy value of the value will be used.
+
+Consider the following:
+
+```python
+def empty_function():
+  return
+
+ls = [1, 2, 3, 4, 5]
+filtered_ls = filter(empty_function, ls)
+print(list(filtered_ls))  # []
+```
+
+By default, functions implicitly return `None` if no return value is specified.
+
+Since the truthy value of `None` is `False`, this means that none of the elements can fulfil the predicate so the resulting list is empty.
+
+Likewise, any non-boolean value will be converted into a boolean by assessing its truthy value. This is synonymous to returning `bool(value)`.
+
+```python
+def return_empty_str():
+  return ''  # empty string evaluates to False
+
+ls = [1, 2, 3, 4, 5]
+filtered_ls = filter(return_empty_str, ls)
+print(list(filtered_ls))  # []
+```
+
+```python
+def return_foo_str():
+  return 'foo'  # string with non-zero length evaluates to True
+
+ls = [1, 2, 3, 4, 5]
+filtered_ls = filter(return_foo_str, ls)
+print(list(filtered_ls))  # [1, 2, 3, 4, 5]
 ```
 
 ## Map
@@ -187,4 +245,21 @@ def do_nothing(arg):
 ls = [1, 2, 3, 4, 5]
 mapped_ls = map(do_nothing, ls)
 print(list(mapped_ls))  # [None, None, None, None, None]
+```
+
+### Common use cases
+
+Given a list of objects, we can filter for objects with a particular attribute:
+
+```python
+def is_male(person) -> bool:
+  return person["gender"] == "m"
+
+people = [
+  {"name": "bob", "gender": "m"},
+  {"name": "peter", "gender": "m"},
+  {"name": "alice", "gender": "f"}
+]
+males = filter(is_male, people)
+print(list(males))  # [{'name': 'bob', 'gender': 'm'}, {'name': 'peter', 'gender': 'm'}]
 ```
