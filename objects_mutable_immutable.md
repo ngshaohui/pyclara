@@ -150,7 +150,7 @@ ls[0] = "b" # ['b', 'o', 'o']
 st = "".join(ls)  # 'boo'
 ```
 
-## Copying object references (TODO)
+## Copying object references
 
 At this point, we have seen that reassignment can cause the references within the variable to change.
 
@@ -261,8 +261,6 @@ The takeaway here is that when passing mutable objects as arguments to another f
 This is in contrast with passing immutable objects, which will not affect the parent scope without a `return` statement.
 
 ## Notable differences between mutable and immutable objects
-
-TODO
 
 ### Equality operators
 

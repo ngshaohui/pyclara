@@ -157,20 +157,33 @@ print(list(filtered_ls))  # [2, 4]
 
 The main benefit of using a filter function is to evoke clarity in the expression.
 
-Do note that there is no real performance gain between the two methods, so neither is superior or more "correct".
+Do note that there is no real performance gain between the two methods, so pick one that feels more comfortable.
+
+A common application of this function is to filter a list of data by specific fields.
+
+```python
+def is_male(person) -> bool:
+  return person["gender"] == "m"
+
+people = [
+  {"name": "bob", "gender": "m", "age": 42},
+  {"name": "peter", "gender": "m", "age": 27},
+  {"name": "alice", "gender": "f", "age": 77}
+]
+males = filter(is_male, people)
+print(list(males))  # [{'name': 'bob', 'gender': 'm', 'age': 42}, {'name': 'peter', 'gender': 'm', 'age': 27}]
+```
 
 ### Filter function does not return boolean
 
-If the function passed to `filter` does not return a `bool`, the truthy value of the value will be used.
-
-Consider the following:
+If the function passed to `filter` does not return a `bool`, the truthy value of the return value will be used.
 
 ```python
-def empty_function():
+def no_return() -> None:
   return
 
 ls = [1, 2, 3, 4, 5]
-filtered_ls = filter(empty_function, ls)
+filtered_ls = filter(no_return, ls)
 print(list(filtered_ls))  # []
 ```
 
@@ -178,7 +191,7 @@ By default, functions implicitly return `None` if no return value is specified.
 
 Since the truthy value of `None` is `False`, this means that none of the elements can fulfil the predicate so the resulting list is empty.
 
-Likewise, any non-boolean value will be converted into a boolean by assessing its truthy value. This is synonymous to returning `bool(value)`.
+Likewise, any non-boolean value will be converted into a boolean by assessing its truthy value, synonymous to returning `bool(value)`.
 
 ```python
 def return_empty_str():
@@ -189,6 +202,8 @@ filtered_ls = filter(return_empty_str, ls)
 print(list(filtered_ls))  # []
 ```
 
+Since `bool('')` evaluates to `False`, the filter function supplied can never be fulfiled.
+
 ```python
 def return_foo_str():
   return 'foo'  # string with non-zero length evaluates to True
@@ -197,6 +212,12 @@ ls = [1, 2, 3, 4, 5]
 filtered_ls = filter(return_foo_str, ls)
 print(list(filtered_ls))  # [1, 2, 3, 4, 5]
 ```
+
+Since `bool('foo')` evaluates to `True`, the filter function supplied will always be fulfiled.
+
+As the outcome of these functions are determined without evaluating any inputs (arguments), we can say that these are vacuously `True` or `False`.
+
+When encountering a completely empty or untouched list after applying a `filter`, it would be good to check if the supplied filter function has been correctly written.
 
 ## Map
 
@@ -218,14 +239,6 @@ mapped_ls = map(multiply_five, ls)
 print(list(mapped_ls))  # [5, 10, 15, 20, 25]
 ```
 
-We can also map from one type to another:
-
-```python
-words = ["one", "two", "three"]
-mapped_ls = map(len, words)
-print(list(mapped_ls))  # [3, 3, 5]
-```
-
 ```python
 def to_upper(st: str) -> str:
   return st.upper()
@@ -236,30 +249,29 @@ mapped_ls = map(to_upper, words)
 print(list(mapped_ls))  # ['FOO', 'BAR', 'FOOBAR']
 ```
 
-Remember that functions implicitly return `None` so if a function does not have a return statement, it simply sets everything to `None`.
+We can also map from one type to another:
 
 ```python
-def do_nothing(arg):
-  pass
+words = ["one", "two", "three"]
+mapped_ls = map(len, words)
+print(list(mapped_ls))  # [3, 3, 5]
+```
+
+Since the `len` function takes in a `str` and returns an `int`, we can map a list of strings to their corresponding lengths.
+
+### No return statement
+
+Remember that functions implicitly return `None` so if a function does not have a return statement.
+
+```python
+def no_return(arg) -> None:
+  pass  # standalone return statement here will do the same thing
 
 ls = [1, 2, 3, 4, 5]
-mapped_ls = map(do_nothing, ls)
+mapped_ls = map(no_return, ls)
 print(list(mapped_ls))  # [None, None, None, None, None]
 ```
 
-### Common use cases
+Since `no_return` does not return any value explicitly, it returns `None` each time it is called, regardless of the argument supplied.
 
-Given a list of objects, we can filter for objects with a particular attribute:
-
-```python
-def is_male(person) -> bool:
-  return person["gender"] == "m"
-
-people = [
-  {"name": "bob", "gender": "m"},
-  {"name": "peter", "gender": "m"},
-  {"name": "alice", "gender": "f"}
-]
-males = filter(is_male, people)
-print(list(males))  # [{'name': 'bob', 'gender': 'm'}, {'name': 'peter', 'gender': 'm'}]
-```
+Each member of the list will be mapped to its corresponding return value, which is always `None`.
