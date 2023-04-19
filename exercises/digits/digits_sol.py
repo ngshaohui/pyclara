@@ -25,6 +25,19 @@ def sum_digits(digits: int) -> int:
 
 def sum_digits2(digits: int) -> int:
     "calculate sum of all individual digits in a number"
+    digits_sum = 0
+    # sum digits from back to front
+    while digits > 0:
+        # get last digit in the number
+        last_digit = digits % 10
+        digits_sum += last_digit
+        # truncate last digit in the number
+        digits = digits // 10
+    return digits_sum
+
+
+def sum_digits3(digits: int) -> int:
+    "calculate sum of all individual digits in a number"
     # convert number to a collection of characters
     digits_str = str(digits)
     # convert each digit character to an array of numbers
