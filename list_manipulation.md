@@ -157,6 +157,8 @@ print(list(ls))  # [1, 2, 3, 4, 5]
 
 ### Working with iterators
 
+If a Python function requires an iterator, it is alright to pass in a collection since all collections can be made into iterables.
+
 Iterators exist since they offer a clear predefined method to keep track of the current position in a collection.
 
 They provide time and space efficiency in our code, since an operation can be deferred indefinitely until the element is requested (lazy evaluation). This also allows us to deal with other input sources of data such as streams, which could contain infinite elements.
@@ -320,3 +322,50 @@ print(list(mapped_ls))  # [None, None, None, None, None]
 Since `no_return` does not return any value explicitly, it returns `None` each time it is called, regardless of the argument supplied.
 
 Each member of the list will be mapped to its corresponding return value, which is always `None`.
+
+## Exercises
+
+In the below exercises, write pure functions.
+
+The initial list should not be modified after the function has been applied on it.
+
+### 1. Find the last element of a list
+
+The list is guaranteed to have at least 1 element.
+
+```python
+def myLast(ls):
+  "TODO"
+```
+
+### 2. Find the second last element of the list
+
+The list is guaranteed to have at least 2 elements.
+
+```python
+def mySecondLast(ls):
+  "TODO"
+```
+
+### 3. Find the kth element of a list
+
+The list is guaranteed to have at least 1 element.
+
+```python
+def elementAt(ls, k):
+  "TODO"
+```
+
+### 4. Find the length of a list
+
+```python
+def myLength(ls):
+  "TODO"
+```
+
+### 5. Reverse a list
+
+```python
+def myReverse(ls):
+  "TODO"
+```
