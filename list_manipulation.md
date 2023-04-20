@@ -1,20 +1,65 @@
 # List manipulation
 
+Most of the data we work with in programming comes in the form of lists.
+
+Python comes with a lot of useful built-in methods for processing lists.
+
+## Combining lists
+
+Combining lists is known as list concatenation.
+
+### `+` operator
+
+Lists can be combined using the `+` operator.
+
+```python
+xs = [1, 2, 3]
+ys = [4, 5, 6]
+ls = xs + ys
+print(ls)  # [1, 2, 3, 4, 5, 6]
+xs = [0]
+print(ls)  # [1, 2, 3, 4, 5, 6]
+```
+
+We append the list `ys` to the back of `xs`, which creates a new list referenced by `ls`.
+
+Since a new list is created, `ls` does not share any references with `xs` nor `ys` and any changes to the 2 lists will not affect `ls`.
+
+### `extend` method
+
+If we do not wish to create a new list, we can use the `extend` method to mutate the list.
+
+```python
+xs = [1, 2, 3]
+ys = [4, 5, 6]
+xs.extend(ys)
+print(xs)  # [1, 2, 3, 4, 5, 6]
+```
+
+The method `extend` will append elements to the back of `xs`, and does not recreate the list.
+
+This is synonymous to iterating through each element of the second list and appending it to the first.
+
+```python
+xs = [1, 2, 3]
+ys = [4, 5, 6]
+for element in ys:
+  xs.append(element)
+```
+
 ## Iterators
 
 Iterators are objects which provide methods for us to step through each element in a collection.
 
+This section serves as a primer on list manipulation functions that return iterators, such as `map` and `filter` in the next sections.
+
 ### Examples of iterables
 
-All collections are iterables.
+All collections can be made into an iterable.
 
 - list
 - tuple
 - dict
-
-There are also functions that can create iterables for us to consume.
-
-- range
 
 ### Consuming an iterable
 
