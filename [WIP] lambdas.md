@@ -1,40 +1,42 @@
 # Lambdas
 
-list iterators
+Lambdas are anonymous functions, ie functions that do not have a name.
 
-only need to teach identity functions after teaching map, filter, reduce
-will also need to teach about the iterable object
+## Anatomy of a lambda function
 
 ```python
-
 def identity(x):
   return x
 
-identity(42)
-(lambda x: x)(42)
+identity(42)  # 42
+(lambda x: x)(42)  # 42
 
 def addition(x: int, y: int) -> int:
   return x + y
 
-addition(1, 5)
-(lambda x, y: x + y) (1, 5)
+addition(1, 5)  # 6
+(lambda x, y: x + y) (1, 5)  # 6
 ```
 
-In short, this aims to demonstrate that lambda functions are essentially just named functions and can be used interchangeably
+A lambda function has 2 portions to it - the left and the right, which can be separated by the colon `:`.
 
-What are the applications of lambda functions?
+Taking the identity function as our example, we can distinguish the left from the right:
 
-There is no real situation where you can only use lambdas and not named functions
+Left: `lambda x`
 
-Do they take up less space when writing code?
-Yes but not really
-```python
-lambda x: x
+Right: `x`
 
-def f(x): return x
-```
+### Left
 
-Other limitations
+For everything from the `lambda` keyword right up to the colon `:`, this is the list of inputs.
+
+### Right
+
+For everything to the right of the colon `:`, this is the return value.
+
+Note that we do not need an explicit `return` statement in a lambda function.
+
+## Limitations
 
 1. they're limited to only 1 line
 2. limited ability to perform control flow (only able to utilise ternary operator)
@@ -42,7 +44,7 @@ Other limitations
 4. errors thrown are not descriptive (will only be attributed to a lambda function)
 5. unable to add type annotations
 
-to expound on point 2
+To expound on point 2
 
 ```python
 lambda x: x if x > 2 else 0
@@ -50,7 +52,10 @@ lambda x: x if x > 2 else 0
 
 This means that things like loops are not possible
 
-So why would we ever want to use lambdas if they are so restrictive?
+## Reasons to use lambdas
+
+Why would we want to use lambdas despite their limitations?
+
 We might have some simple logic which we don't want to write as a function since it's too straightforward
 
 For example, when destructuring a list of objects
@@ -87,13 +92,16 @@ def test_answer():
   assert get_first_name(user_obj) == "billie"
 ```
 
-you can name lambda functions, but it is kinda useless
+We can name lambda functions, but we might as well write a named function for it.
 
 ```python
 subtraction = lambda x, y : x - y
+
+def subtraction(x, y):
+  return x - y
 ```
 
-ultimately, lambdas just give us the convenience to apply a quick operation in conjunction with map, filter, reduce
+Lambdas give us the convenience to apply a quick operation in conjunction with map, filter, reduce
 
 ```python
 # multiply each number by 3
@@ -104,3 +112,9 @@ mul_ls = map(lambda x: x * 3, ls)
 ls = ["seeing", "is", "believing"]
 e_ls = filter(lambda x: 'e' in x, ls)
 ```
+
+## Summary
+
+Lambda functions are essentially just named functions and can be used interchangeably.
+
+There is no real situation where you can only use lambdas and not named functions, other than for the sake of convenience.
