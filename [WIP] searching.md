@@ -1,6 +1,6 @@
 # Searching
 
-One of the most common algorithms we encounter is to search for an element in a collection.
+One of the most common algorithms we frequently encounter is to search for an element in a collection.
 
 Python has a lot of nice searching functions built in already for searching, which we can use instead of implementing our own.
 
@@ -68,6 +68,7 @@ However, this is restricted to sorted lists only. For unsorted lists, we still n
 Python has a built in function `bisect_left` which we may use to perform a binary search
 
 https://docs.python.org/3/library/bisect.html#bisect.bisect_left
+https://github.com/python/cpython/blob/dc08c7a51582027a412bdcf821a98b2af77b44c9/Lib/bisect.py#L68
 
 ```python
 def binary_search(ls: list[int], target: int) -> int:
