@@ -69,29 +69,34 @@ It is synonymous to having a cursor and then stepping through a list.
 
 ```python
 ls = [1, 2, 3, 4, 5]
-ls_iter = iter(ls)
+ls_iter = iter(ls)  # create a list iterator
 
 # [| 1, 2, 3, 4, 5]  # the | symbol indicates the position of the cursor
 ```
 
+The cursor of an iterator will start from the very beginning of the list.
+
 When we ask for the next element, the cursor will return the item next to the iterator, in this case the value 1:
 
 ```python
-print(next(ls_iter))  # 1
+# [| 1, 2, 3, 4, 5]
+next(ls_iter)  # 1
 # [1, | 2, 3, 4, 5]
 ```
 
 We can call `next` again, and the cursor will be at the next element in the list.
 
 ```python
-print(next(ls_iter))  # 2
+# [1, | 2, 3, 4, 5]
+next(ls_iter)  # 2
 # [1, 2, | 3, 4, 5]
 ```
 
 We can continue iterating until we have reached the last element in the list, which can be visualised as follows:
 
 ```python
-print(next(ls_iter))
+# [1, 2, | 3, 4, 5]
+next(ls_iter)
 # [1, 2, 3, 4, 5 |]
 ```
 
@@ -99,7 +104,7 @@ Once we are at the last element in the list, calling `next` again will throw an 
 
 ```python
 # [1, 2, 3, 4, 5 |]
-print(next(ls_iter))
+next(ls_iter)
 # Traceback (most recent call last):
 #   File "<stdin>", line 1, in <module>
 # StopIteration
@@ -123,6 +128,8 @@ next(ls_iter)  # Error as follows:
 
 We can also opt to use `for .. in` to iterate through an `iter` object.
 
+This is a much more intuitive and pythonic method to consume an `iter` object, rather than calling `next` for `n` times.
+
 ```python
 ls_iter = iter([1, 2, 3])
 for num in ls_iter:
@@ -134,7 +141,7 @@ for num in ls_iter:
 
 ### Differences with a `list`
 
-Iterables can only be consumed once
+Iterables can only be consumed once:
 
 ```python
 ls = [1, 2, 3, 4, 5]
@@ -155,9 +162,11 @@ print(list(ls))  # [1, 2, 3, 4, 5]
 print(list(ls))  # [1, 2, 3, 4, 5]
 ```
 
+We can construct a list using the `list` constructor and passing in an iterator.
+
 ### Working with iterators
 
-If a Python function requires an iterator, it is alright to pass in a collection since all collections can be made into iterables.
+If a Python function requires an iterator, it suffices to pass in a collection since all collections can be made into iterables.
 
 Iterators exist since they offer a clear predefined method to keep track of the current position in a collection.
 
