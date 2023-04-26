@@ -375,6 +375,40 @@ The first step `-M` renames the current branch you are in to `main` to standardi
 
 The next step specifies that we want to (1) set our upstream as `origin` remote url and (2) push the `main` branch.
 
+##### Visualisation before push
+
+  Local Repository                   Remote Repository
+  (your computer)                (hosted on GitHub or GitLab)
+
+ +-------------+                 no commits
+ |  commit A   |
+ +-------------+
+ |  commit B   |
+ +-------------+
+ |  commit C   |
+ +-------------+
+ |  commit D   |
+ +-------------+
+ |  commit E   |
+ +-------------+
+
+##### Visualisation after push
+
+  Local Repository                   Remote Repository
+  (your computer)                (hosted on GitHub or GitLab)
+
+ +-------------+                 +------------------+
+ |  commit A   |                 |    commit A      |
+ +-------------+                 +------------------+
+ |  commit B   |                 |    commit B      |
+ +-------------+                 +------------------+
+ |  commit C   |                 |    commit C      |
+ +-------------+                 +------------------+
+ |  commit D   |                 |    commit D      |
+ +-------------+                 +------------------+
+ |  commit E   |                 |    commit E      |
+ +-------------+                 +------------------+
+
 ##### Branches
 
 Branches are a way to work on multiple features for a codebase at the same time (branching off).
@@ -391,8 +425,28 @@ This simulates the context where we do not have
 
 #### `pull`
 
-(TODO) think of a scenario on how to learn this without have 2 PCs.
-Perhaps just have 2 of the same repo on one computer, but it is not realistic at all.
+  Local Repository                   Remote Repository
+  (your computer)                (hosted on GitHub or GitLab)
+
+ +-------------+                 +------------------+
+ |  commit A   |                 |    commit A      |
+ +-------------+                 +------------------+
+ |  commit B   |                 |    commit B      |
+ +-------------+                 +------------------+
+                                 |    commit C      |
+                                 +------------------+
+                                 |    commit D      |
+                                 +------------------+
+                                 |    commit E      |
+                                 +------------------+
+
+If another user adds new commits to the remote repository, your local repository might be behind on commits.
+
+We will need to download the additional data to synchronise the remote and local repositories.
+
+```bash
+git pull
+```
 
 ## Hands on with VSCode `git` (TODO)
 
@@ -431,8 +485,6 @@ Here are some of the common problems and possible steps for remediation, or just
 
 ### Change commit history (TODO)
 
-### Merge conflict (TODO)
-
 ### Not a `git` repository
 
 ```
@@ -468,3 +520,7 @@ ngshaohui@shaohui-mbp-202 poems % git lg
 
 - data vs binary files
 - multiple branches
+
+## Disclaimers
+
+- ASCII images generated and adapted from ChatGPT3

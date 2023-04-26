@@ -34,12 +34,18 @@ def count_candles(n: int, k: int) -> int:
         return n
 
     else:
+        # SH: (Design - Naming) What does counter represent?
+        # SH: Can opt for a more descriptive variable name that describes its purpose
+        # SH: In this case, counter seems to indicate the number of new candles formed from the residuals
+        # SH: candles_from_residuals
         counter = 1
         new_total = n - k + counter              #once we enter this loop, new_total = initial candles deducted by k and counter = 1
         while(new_total>=k):                #while new_total is less than k, we will increment counter
             counter += 1
             
             new_total = new_total - k + 1  #this is to add in additional candle after burning k
+        # SH: Can simplify the return statement rather than storing it in a variable first
+        # SH: return n + counter
         n = n + counter                     #to calculate the total number of candles burnt, add counter into initial candles 
         return n
 
