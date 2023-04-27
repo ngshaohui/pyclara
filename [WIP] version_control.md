@@ -182,7 +182,7 @@ This is done by bundling all the changes into a single snapshot, to be used as a
 1. Use the `git commit -m "<MESSAGE>"` command to commit your changes
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git commit -m "add poem"
+sh@mbp poems % git commit -m "add poem"
 [master (root-commit) 4eaeff1] add poem
  1 file changed, 3 insertions(+)
  create mode 100644 poem.txt
@@ -195,7 +195,7 @@ In this case, the commit hash is `4eaeff1`.
 It also displays a summary of the number of (1) files changed, (2) lines inserted, and (3) lines deleted.
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git status
+sh@mbp poems % git status
 On branch master
 nothing to commit, working tree clean
 ```
@@ -234,7 +234,7 @@ In the April wind.
 We can view all the commits that have been made with the `git log` command:
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git log
+sh@mbp poems % git log
 commit 0cfafcc63f66241b9ad07bcc7e51ec6ce75ef0cf (HEAD -> master)
 Author: shaohui <ngshaohui@sea.com>
 Date:   Tue Apr 25 16:31:28 2023 +0800
@@ -265,7 +265,7 @@ We will need to find out the commit hashes by running `git log` as in the previo
 2. Delete the file `poem2.txt`
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git status
+sh@mbp poems % git status
 On branch master
 Changes not staged for commit:
   (use "git add/rm <file>..." to update what will be committed)
@@ -277,7 +277,7 @@ Changes not staged for commit:
 3. Add files and commit the changes
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git log
+sh@mbp poems % git log
 commit c7409b588fe54103f5321f92557c9d6b58f043b1 (HEAD -> master)
 Author: shaohui <ngshaohui@sea.com>
 Date:   Tue Apr 25 17:44:55 2023 +0800
@@ -304,11 +304,11 @@ The snapshot `0cfafcc63f66241b9ad07bcc7e51ec6ce75ef0cf` was where we had just ad
 4. Use `git reset <HASH>` to restore to that snapshot
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git reset 0cfafcc63f66241b9ad07bcc7e51ec6ce75ef0cf
+sh@mbp poems % git reset 0cfafcc63f66241b9ad07bcc7e51ec6ce75ef0cf
 Unstaged changes after reset:
 M	poem.txt
 D	poem2.txt
-ngshaohui@shaohui-mbp-202 poems % git status
+sh@mbp poems % git status
 On branch master
 Changes not staged for commit:
   (use "git add/rm <file>..." to update what will be committed)
@@ -328,7 +328,7 @@ We can add the `--hard` flag to restore the snapshot completely, discarding any 
 5. Use `git reset --hard` to discard the changes in order to restore the snapshot completely
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git reset --hard
+sh@mbp poems % git reset --hard
 HEAD is now at 0cfafcc add another poem
 ```
 
@@ -425,27 +425,40 @@ This simulates the context where we do not have
 
 #### `pull`
 
-  Local Repository                   Remote Repository
-  (your computer)                (hosted on GitHub or GitLab)
+  Local Repository                   Remote Repository                   Local Repository
+  (your computer)                (hosted on GitHub or GitLab)            (other computer)
 
- +-------------+                 +------------------+
- |  commit A   |                 |    commit A      |
- +-------------+                 +------------------+
- |  commit B   |                 |    commit B      |
- +-------------+                 +------------------+
-                                 |    commit C      |
-                                 +------------------+
-                                 |    commit D      |
-                                 +------------------+
-                                 |    commit E      |
-                                 +------------------+
+ +-------------+                 +------------------+                    +-------------+
+ |  commit A   |                 |    commit A      |                    |  commit A   |
+ +-------------+                 +------------------+                    +-------------+
+ |  commit B   |                 |    commit B      |                    |  commit B   |
+ +-------------+                 +------------------+                    +-------------+
+                                 |    commit C      |                    |  commit C   |
+                                 +------------------+                    +-------------+
+                                 |    commit D      |                    |  commit D   |
+                                 +------------------+                    +-------------+
+                                 |    commit E      |                    |  commit E   |
+                                 +------------------+                    +-------------+
 
 If another user adds new commits to the remote repository, your local repository might be behind on commits.
 
-We will need to download the additional data to synchronise the remote and local repositories.
+We will need to download the additional data to synchronise with the remote repository.
+
+1. Use `git pull` to download additional commits from the remote to your local repository.
 
 ```bash
 git pull
+```
+
+##### No new data
+
+It is possible that you already have all the newest commits.
+
+In this case, a message will be shown that you are "already up to date".
+
+```bash
+sh@mbp poems % git pull
+Already up to date.
 ```
 
 ## Hands on with VSCode `git` (TODO)
@@ -475,29 +488,6 @@ Some of the prominent UI `git` tools include:
 
 Since VSCode is primarily meant as a code editor, the features it has are quite rudimentary but it suffices for most workflows.
 
-## `git`-fu
-
-There are bound to be complications that arise when using `git` to version control a file across different machines.
-
-Here are some of the common problems and possible steps for remediation, or just information on potential problems with `git` workflows.
-
-### Uncommit files (TODO)
-
-### Change commit history (TODO)
-
-### Not a `git` repository
-
-```
-sh@mbp ~ % git add .
-fatal: not a git repository (or any of the parent directories): .git
-```
-
-We can encounter this when executing `git` commands on a repository without a `.git/` folder.
-
-This means that the folder has not been initialised with `git` yet.
-
-If we are certain that this is the correct folder, we should initialise `git` with `git init` before continuing.
-
 ## `.gitconfig`
 
 It is possible to add alias commands and beautify the `git log` output.
@@ -512,7 +502,7 @@ It is possible to add alias commands and beautify the `git log` output.
 ```
 
 ```bash
-ngshaohui@shaohui-mbp-202 poems % git lg
+sh@mbp poems % git lg
 * 4eaeff1 - (HEAD -> master) add poem (29 minutes ago) <shaohui>
 ```
 
