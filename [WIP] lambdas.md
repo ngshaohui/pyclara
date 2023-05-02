@@ -28,7 +28,7 @@ Right: `x`
 
 ### Left
 
-For everything from the `lambda` keyword right up to the colon `:`, this is the list of inputs.
+For everything on the left, from the `lambda` keyword right up to the colon `:`, this is the list of inputs.
 
 ### Right
 
@@ -44,13 +44,33 @@ Note that we do not need an explicit `return` statement in a lambda function.
 4. errors thrown are not descriptive (will only be attributed to a lambda function)
 5. unable to add type annotations
 
-To expound on point 2
+To expound on point 2:
+
+Control flows usually require more than one line.
+
+```python
+# if statement
+if True:
+  pass
+
+# loop
+while True:
+  pass
+```
+
+There's a way to compress it into a line, also known as the ternery operator:
+
+```python
+"foo" if x is "foobar" else "bar"
+```
+
+This is the only way we can accomplish control flow in a lambda function.
 
 ```python
 lambda x: x if x > 2 else 0
 ```
 
-This means that things like loops are not possible
+This also means that things like loops are not possible.
 
 ## Reasons to use lambdas
 
@@ -75,8 +95,8 @@ user_obj = {
   "document": {
     "id": 123,
     "particulars": {
-      "first_name": "billie",
-      "last_name": "pratama"
+      "first_name": "bob",
+      "last_name": "dylan"
     }
   }
 }
@@ -89,7 +109,7 @@ by having a named function we are able to write a test for it
 
 ```python
 def test_answer():
-  assert get_first_name(user_obj) == "billie"
+  assert get_first_name(user_obj) == "bob"
 ```
 
 We can name lambda functions, but we might as well write a named function for it.
