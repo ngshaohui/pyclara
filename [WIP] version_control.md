@@ -83,7 +83,7 @@ Files removed will only show up in this tab marked in red, with the filename cro
 
 ## Hands on with `git`
 
-For learning purposes, we shall start off with some simple activities to get accustomed with the `git` workflows using the `git` program natively.
+For learning purposes, we shall start off with some simple exercises to get accustomed with the `git` workflows using the `git` program natively.
 
 ### Using `git` for version control
 
@@ -93,7 +93,7 @@ For learning purposes, we shall start off with some simple activities to get acc
 
 2. Open the folder in VSCode
 
-3. Navigate to the folder by either using a separate terminal or using macOS's terminal
+3. Navigate to the folder by either using a terminal from VSCode or using macOS's terminal
 
 4. Add a file with the following content:
 
@@ -106,7 +106,7 @@ Her eyes, Primroses.
 
 #### `init`
 
-We can init `git` in the workspace with
+We can initialise `git` in the workspace with
 
 ```bash
 git init
@@ -128,6 +128,8 @@ Untracked files:
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
+
+We are not tracking anything at the moment, but `git` does show that we can `add` a list of possible untracked files.
 
 The "Source Control" tab on VSCode will show the summary similar to `git status`.
 
@@ -158,6 +160,8 @@ Changes to be committed:
 	new file:   poem.txt
 ```
 
+Since we have now added the file to be tracked, it is listed under "new file", and is awaiting for us to `commit` the changes in the next step.
+
 The "Source Control" tab will now show `poem.txt` under the "Staged Changes" dropdown.
 
 Files that have been added are known as "staged" files.
@@ -187,7 +191,7 @@ sh@mbp poems % git commit -m "add poem"
  create mode 100644 poem.txt
 ```
 
-When a commit is made, it tells us the commit hash so that we can refer to this again when we want to use this as a restore point.
+When a commit is made, it tells us the commit hash so that we can refer to this snapshot again when we want to use this as a restore point.
 
 In this case, the commit hash is `4eaeff1`.
 
@@ -200,6 +204,8 @@ nothing to commit, working tree clean
 ```
 
 Since all our changes have already been committed, `git status` will display an empty list.
+
+However, notice that it no longer indicates how we have "No commits yet".
 
 ##### Commit message
 
@@ -247,7 +253,7 @@ Date:   Tue Apr 25 16:00:37 2023 +0800
     add poem
 ```
 
-A list of commit logs will be shown, from the newest to the oldest.
+A list of commit logs will be shown, from the newest (above) to the oldest (below).
 
 One thing to note is the hash `4eaeff1` we obtained previously during our commit only corresponds to the first 8 characters in the first commit `4eaeff1cb864462f088aa506868521e392d973e4`.
 
@@ -335,7 +341,7 @@ Note that this can be combined with the git reset command previously as a single
 
 `git reset 0cfafcc63f66241b9ad07bcc7e51ec6ce75ef0cf --hard`
 
-### Using `git` for remote storage
+### Using `git` for remote storage via Github
 
 #### Add a remote url
 
@@ -360,6 +366,8 @@ It is possible to have multiple origins, but this is usually rather rare.
 Most projects will only have a single remote, and it will be called `origin`.
 
 #### `push`
+
+"Pushing" refers to uploading data from our local to a remote repository.
 
 In the previous step when creating our repository, the instructions for "…or push an existing repository from the command line" also comes with instructions on how to push the current branch.
 
@@ -386,10 +394,6 @@ The next step specifies that we want to (1) set our upstream as `origin` remote 
  +-------------+
  |  commit C   |
  +-------------+
- |  commit D   |
- +-------------+
- |  commit E   |
- +-------------+
 
 ##### Visualisation after push
 
@@ -402,10 +406,6 @@ The next step specifies that we want to (1) set our upstream as `origin` remote 
  |  commit B   |                 |    commit B      |
  +-------------+                 +------------------+
  |  commit C   |                 |    commit C      |
- +-------------+                 +------------------+
- |  commit D   |                 |    commit D      |
- +-------------+                 +------------------+
- |  commit E   |                 |    commit E      |
  +-------------+                 +------------------+
 
 ##### Branches
@@ -420,9 +420,44 @@ However, do note that most projects do utilise multiple branches, usually separa
 
 1. Delete the folder from your computer
 
-This simulates the context where we do not have
+This simulates the context where we do not have the repository stored locally on our machine.
+
+2. Clone the folder to your machine from the remote repository on Github
+
+```bash
+git pull git@github.com:shinlos/learngit.git
+```
+
+This clones the entire repository to your computer, including its `git` history.
+
+We can ascertain this by checking with `git status`:
+
+```bash
+sh@mbp poems % git log
+commit c7409b588fe54103f5321f92557c9d6b58f043b1 (HEAD -> master)
+Author: shaohui <ngshaohui@sea.com>
+Date:   Tue Apr 25 17:44:55 2023 +0800
+
+    random deletion
+
+commit 0cfafcc63f66241b9ad07bcc7e51ec6ce75ef0cf
+Author: shaohui <ngshaohui@sea.com>
+Date:   Tue Apr 25 16:31:28 2023 +0800
+
+    add another poem
+
+commit 4eaeff1cb864462f088aa506868521e392d973e4
+Author: shaohui <ngshaohui@sea.com>
+Date:   Tue Apr 25 16:00:37 2023 +0800
+
+    add poem
+```
+
+We will still be able to use any of this commits as our restore points.
 
 #### `pull`
+
+"Pulling" refers to downloading data from a remote repository to our local repository.
 
   Local Repository                   Remote Repository                   Local Repository
   (your computer)                (hosted on GitHub or GitLab)            (other computer)
@@ -433,10 +468,6 @@ This simulates the context where we do not have
  |  commit B   |                 |    commit B      |                    |  commit B   |
  +-------------+                 +------------------+                    +-------------+
                                  |    commit C      |                    |  commit C   |
-                                 +------------------+                    +-------------+
-                                 |    commit D      |                    |  commit D   |
-                                 +------------------+                    +-------------+
-                                 |    commit E      |                    |  commit E   |
                                  +------------------+                    +-------------+
 
 If another user adds new commits to the remote repository, your local repository might be behind on commits.
