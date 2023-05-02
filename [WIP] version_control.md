@@ -1,10 +1,8 @@
 # Version control
 
-Having version control is effective for working with multiple iterations of a particular project.
+Having version control is effective for working with multiple iterations of a particular project, as it allows us to rollback any unwanted changes.
 
-We can also work on different copies of the same project, and be able to synchronise them on the same timeline.
-
-This allows multiple people to work on the same project simultaneously (or the same person), on different machines.
+It also allows multiple people to work on the same project simultaneously (or even the same person) on different machines, synchronising all the changes.
 
 ## Popular version control tools
 
@@ -32,9 +30,8 @@ While it is meant for version controlling code files in general, it can be used 
 The gist of how `git` works for version control is:
 
 1. Take a snapshot of data in a file at any time
-2. Check the difference of current snapshot against older snapshots
-3. Revert data back to an older snapshot
-4. Change data from an older snapshot to a newer snapshot
+2. Check the difference of data between any 2 snapshots
+3. Restore data from any of the snapshots taken
 
 This is achieved by saving the snapshots locally in a folder `.git/` on your system.
 
@@ -46,7 +43,7 @@ By gaining access to someone's `.git/` folder, it might be possible to recreate 
 
 However if we wish to work on a project on another machine, we will need to store it somewhere remotely first.
 
-A gist of how `git` works for remote storage is:
+The gist of how `git` works for remote storage is:
 
 1. Set a remote location where the data should be stored
 2. Upload the project's data to the remote location
@@ -62,17 +59,19 @@ Likewise, when we change data locally we will also want to update the copy store
 
 Services such as Github, Gitlab, Gitbucket provide an interactive way to store and view the data we have version controlled using `git`.
 
-They both have underlying mechanisms that rely on `git` to function, with your snapshots hosted on their services (similar to a cloud service).
+They both have underlying mechanisms that rely on `git` to function.
 
-The user is also required to use `git` to function with these services.
+Provides remote storage to host your snapshots hosted on their services (similar to a cloud service).
+
+The user is also required to use `git` to interact with these services.
 
 ### VSCode `git`
 
 VSCode automatically detects if a `.git/` folder exists in the current project directory.
 
-If a file has been changed, it is marked by the file explorer in orange and appends a M (modified) to the back of the filename.
+If a file is changed, it is marked by the file explorer in orange and appends a M (modified) to the back of the filename.
 
-If a file has been added, it is marked by the file explorer in green and appends a U (untracked) to the back of the filename.
+If a file is added, it is marked by the file explorer in green and appends a U (untracked) to the back of the filename.
 
 #### Summary tab
 
@@ -461,7 +460,7 @@ sh@mbp poems % git pull
 Already up to date.
 ```
 
-## Hands on with VSCode `git` (TODO)
+## Hands on with VSCode `git`
 
 ### The `.git/` directory
 
@@ -505,6 +504,21 @@ It is possible to add alias commands and beautify the `git log` output.
 sh@mbp poems % git lg
 * 4eaeff1 - (HEAD -> master) add poem (29 minutes ago) <shaohui>
 ```
+
+## Comparison with Google Docs
+
+### Similarities
+
+- Sync to multiple machines
+- Backup to a remote server/to the cloud
+- Have a timeline to restore older iterations
+- View relevant authors for every line of content generated
+- Easily share files
+
+### Differences
+
+- gdocs can view changes in real time, while `git` only shows updates to repositories when `push` or `pull` is done
+- `git` gives us explicit control over when to make snapshots, whereas gdocs does so arbitrarily
 
 ## Extra reading
 
