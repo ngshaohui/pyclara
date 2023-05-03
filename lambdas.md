@@ -18,7 +18,7 @@ addition(1, 5)  # 6
 (lambda x, y: x + y) (1, 5)  # 6
 ```
 
-A lambda function has 2 portions to it - the left and the right, which can be separated by the colon `:`.
+A lambda function has 2 portions to it - the **left** and the **right**, which can be separated by the colon `:`.
 
 Taking the identity function as our example, we can distinguish the left from the right:
 
@@ -38,15 +38,15 @@ Note that we do not need an explicit `return` statement in a lambda function.
 
 ## Limitations
 
-1. they're limited to only 1 line
-2. limited ability to perform control flow (only able to utilise ternary operator)
-3. not able to write test cases to test the lambda function you have written
-4. errors thrown are not descriptive (will only be attributed to a lambda function)
-5. unable to add type annotations
+### Limited to only 1 line
 
-To expound on point 2:
+https://docs.python.org/3/reference/expressions.html#lambda
 
-Control flows usually require more than one line.
+Lambdas are limited to a single expression, so we can not have complex logic within them.
+
+### Limited ability to perform control flow
+
+There is no straightforward way to perform control flow with a single expression as control flows usually require more than one line.
 
 ```python
 # if statement
@@ -58,7 +58,7 @@ while True:
   pass
 ```
 
-There's a way to compress it into a line, also known as the ternery operator:
+There's a way to compress the `if` statement into a line, also known as the ternery operator:
 
 ```python
 "foo" if x is "foobar" else "bar"
@@ -70,23 +70,42 @@ This is the only way we can accomplish control flow in a lambda function.
 lambda x: x if x > 2 else 0
 ```
 
-This also means that things like loops are not possible.
+However, things like loops are not possible.
+
+### Not able to write test cases to test lambda functions
+
+Tests are written in external files, calling the functions we want to test for each test case we have designed.
+
+However, lambda functions can not be exported without being named.
+
+The only way to export and test a lambda function will be to name it first, disqualifying it as a lambda function.
+
+### Unable to add type annotations
+
+Type annotations are not possible when using lambdas according to the python specification.
+
+```python
+def is_even(num: int) -> bool:
+  return num % 2 == 0
+
+lambda num: num % 2 == 0
+```
 
 ## Reasons to use lambdas
 
-Why would we want to use lambdas despite their limitations?
+While lambdas have a lot of limitations and undesirable traits, there are still valid use cases for them.
 
-We might have some simple logic which we don't want to write as a function since it's too straightforward
+We might have some simple logic which we don't want to write as a function since it's too straightforward.
 
-For example, when destructuring a list of objects
+For example, when destructuring a list of objects:
 
 ```python
-ls = [{'name': "bob", 'age': 10}, {'name': "billie", 'age': 12}]
-xs = map(lambda x: x['name'], ls)
-print(xs)  # gives us an iterable object
-# we need to convert it to a list if we still want to work with lists later on
-print(list(xs))  # [1, 4]
+people = [{'name': "bob", 'age': 27}, {'name': "alice", 'age': 42}]
+names = map(lambda x: x['name'], people)
+print(list(names))  # ['bob', 'alice']
 ```
+
+Since the logic is trivial enough, we can opt to have it as a lambda function for ease of use.
 
 However depending on the complexity of the function, we might not want to use a lambda after all as we want to be able to test it
 
@@ -105,7 +124,7 @@ def get_first_name(user_obj):
   return user_obj["document"]["particulars"]["first_name"]
 ```
 
-by having a named function we are able to write a test for it
+By having a named function we are able to write a test for it:
 
 ```python
 def test_answer():
@@ -121,7 +140,7 @@ def subtraction(x, y):
   return x - y
 ```
 
-Lambdas give us the convenience to apply a quick operation in conjunction with map, filter, reduce
+Lambdas give us the convenience to apply a quick operation in conjunction with map, filter, reduce.
 
 ```python
 # multiply each number by 3
