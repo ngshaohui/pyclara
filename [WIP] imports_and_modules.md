@@ -1,12 +1,20 @@
 # Imports and modules
 
-## Modules
-
-https://docs.python.org/3/tutorial/modules.html#more-on-modules
+https://docs.python.org/3/reference/import.html
 
 Python programs are usually made up of many different files, separated by their responsibilities.
 
-This can be in the form of other files we have written ourselves, or when we depend on libraries that have been written by other people.
+This can be in the form of other files we have written ourselves, or packages that have been written by others.
+
+```python
+import requests  # import everything in package downloaded from pip
+import some/other/script  # import everything in local module
+from math import pi  # import specific constant from library
+from bs4 import BeautifulSoup  # import specific function from library
+import module.with_a.sub_module  # import submodule
+from .local_package import local_function  # import local relative package
+import some_long_module_name as module_name  # import with alias
+```
 
 ## Local imports
 
@@ -15,8 +23,8 @@ This can be in the form of other files we have written ourselves, or when we dep
 ### Co-located files
 
 ```python
-import bar
 # foo.py
+import bar
 print("Hello from foo.py")
 bar.foobar()
 ```
